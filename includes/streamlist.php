@@ -9,7 +9,8 @@ $json_array = json_decode(file_get_contents_curl($url), true);
 echo '<li class="online"><a href="./watch.php?name='.$stream_name.'">'.$stream_name .' <span class="onlineHighlight">Online</span></a></li>';
   }
   else {
-    echo '<li class="offline">'.$stream_name .' <span class="offlineHighlight">Offline</span></li>';
+    //Uncomment to show offline
+    //echo '<li class="offline">'.$stream_name .' <span class="offlineHighlight">Offline</span></li>';
   }
 }  
 

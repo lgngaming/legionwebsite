@@ -1,4 +1,4 @@
-<?php include('./includes/head.php'); ?>
+<?php include('head.php'); ?>
 <?php $streamer = $_GET['name']?>
 <html>
   <body>

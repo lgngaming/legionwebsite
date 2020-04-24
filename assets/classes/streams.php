@@ -14,7 +14,9 @@ class Stream
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `twitch_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
             `team` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-            `online` char(64) COLLATE utf8_unicode_ci NOT NULL,
+            `online` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            `current_stream_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+            `current_viewer_count` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
             `priority` INT(255) COLLATE utf8_unicode_ci NOT NULL,
             PRIMARY KEY (`id`),
             UNIQUE KEY `twitch_name` (`twitch_name`)
@@ -36,6 +38,12 @@ public function get_online_streams() {
 
      public function get_stream_from_ID($id){
         return $this->conn->run("SELECT * FROM streams WHERE id=?",[$id])->fetch();
+    }
+
+    public function get_last_priority(){
+        $result = $this->conn->run("SELECT priority FROM streams ORDER BY priority DESC LIMIT 1")->fetch();
+        $lastpriority = $result['priority'];
+        return $lastpriority;
     }
 
     public function addStream($name, $team){
@@ -90,9 +98,32 @@ public function get_online_streams() {
         
     }
 
-    public function storeStream($name, $team){
+    public function updateStreamOnline($id, $status, $current_stream_title, $current_viewer_count){
+
+        if(!$this->get_stream_from_ID($id)) {
+            popnotification('error', 'Stream doesn\'t exists');
+             }
+    else {
     try {
-    $this->conn->run("INSERT INTO streams (twitch_name, team, online) VALUES (?,?,'0')",[$name, $team]);
+        //SANITIZE THE TITLE
+        $current_stream_title = stripslashes($current_stream_title);
+        $current_stream_title = htmlspecialchars($current_stream_title);
+        $current_stream_title = clean($current_stream_title);
+$this->conn->run("Update streams SET online = ?, current_stream_title = ?, current_viewer_count = ? WHERE id = ?",[$status, $current_stream_title, $current_viewer_count, $id]);
+$caught = false;
+}
+catch (PDOException $e){
+throw $e;
+}
+    }    
+}
+
+    public function storeStream($name, $team){
+        $priority = $this->get_last_priority();
+        //add +1 to the highest priority for the new stream
+        $priority++;
+    try {
+    $this->conn->run("INSERT INTO streams (twitch_name, team, online, priority) VALUES (?,?,'0', ?)",[$name, $team, $priority]);
     $caught = false;
     }
     catch (PDOException $e){

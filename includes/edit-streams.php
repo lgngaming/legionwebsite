@@ -5,7 +5,7 @@ include_once('assets/classes/streams.php');
 $mypdo = new MyPDO('mysql:host=localhost;dbname=twitchdb;charset=utf8');
 $Stream = new Stream($mypdo);
 $rows = $Stream->get_streams();
-print_r($_POST);
+//print_r($_POST);
 if(isset($_POST['addStream'])){
 $twitchname = $_POST['twitch_name'];
 $teamname = $_POST['team'];

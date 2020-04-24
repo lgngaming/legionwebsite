@@ -2,8 +2,95 @@
 h1, .h1 {
 font-size: 2em;
 }
-nav.navbar ul {
+.mobile-nav-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background: #222;
+    .mobileLogo {
+        width: 350px;
+        max-width: 90%;
+        img {
+            max-width: 100%;
+        }
+    }
+.menu-toggle {
+transform-origin: center center;
+transform: translate(-50%, -50%) rotate(0deg);
+height: 2.5em;
+width: 3em;
+font-size: 1.5vw;
+border: solid .25em #FFF;
+max-width: 5em;
+padding: .75em;
+position: relative;
+right: -10%;
+bottom: -55px;
 display: flex;
+flex-direction: column;
+justify-content: space-between;
+cursor: pointer;
+transition: transform 300ms ease;
+span {
+  height: .35em;
+  width: 120px;
+  background-color: white;
+  transition: width 200ms ease;
+  &:nth-child(1) {
+    width: 100%;
+    transition-delay: 200ms;
+  }
+  &:nth-child(2) {
+    width: 100%;
+  }
+  &:nth-child(3) {
+    width: 80%;
+    transition-delay: 400ms;
+  }
+  &:nth-child(4) {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+    width: .5em;
+    height: 0;
+    transition: height 400ms;
+  }
+}
+}
+.menu-toggeled {
+transform: translate(-50%, -50%) rotate(45deg);
+transition-delay: 400ms;
+border-width: 0px;
+height: 2em;
+
+span:nth-child(1){
+  width: 0;
+  transition: 200ms ease;
+}
+span:nth-child(2){
+height: 0.55em;
+width: 105%;
+}
+span:nth-child(3) {
+  width: 0;
+  transition: 200ms ease;
+  transition-delay: 150ms;
+}
+span:nth-child(4) {
+  height: 100%;
+  transition: height 200ms ease;
+  transition-delay: 200ms;
+}
+    }
+
+@media (min-width: 1030px){
+display: none;
+}
+}
+ul.top-navigation {
+display: none;
 background: rgba(0,0,0,0.5);
 margin: 0;
 padding: 0;
@@ -47,16 +134,38 @@ justify-content: space-around;
 }
 li.logo {
     margin: 0 1em;
+    display: none;
     img {
     height: 100px;
     }
 }
+@media (min-width: 1030px){
+display: flex !important;
+li.logo {
+display: block;
+}
+
+}
+@media (max-width: 1029px){
+ 
+        top: 115px;
+        background: #111;
+        text-align: right;
+        li {
+            a {
+                width: 85%;
+            }
+        }
+    
+}
 }
 .nav-spacer {
     display: block;
-    height: 100px;
     position: relative;
     background: #333;
+    @media(min-width: 1030px){
+        height: 100px;
+    }
 }
 body {
 margin: 0;
@@ -142,9 +251,11 @@ li {
 }
 .pageStreamBox {
 max-width: 1250px;
-    margin: 0 auto;
+    margin: 1em auto;
 padding: 0 1em;
-
+iframe {
+max-width: 100%;
+}
 }
 h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
     font-family: 'Titillium Web', sans-serif;
@@ -175,9 +286,11 @@ h2 {
 display: flex;
     flex-wrap: wrap;
     width: 600px;
+    max-width: 100%;
     margin: 2em auto;
     justify-content: center;
     align-items: center;
+
 .allStreams, .lgnStreams {
     background-color: #C11;
     border-radius: 10px;
@@ -202,6 +315,12 @@ display: flex;
     outline: 0;
     }
 }
+@media (max-width: 767px) {
+    flex-direction: column;
+    .allStreams, .lgnStreams {
+        margin: .5em auto;
+    }
+}
 }
 .slick-streams {
     display: flex;
@@ -209,7 +328,13 @@ display: flex;
     max-width: 1800px;
 }
 .single-stream {
+    width: 90%;
+    margin: 0 auto;
+    @media(min-width: 600px){
+        width: 40%;
+    }
 img {
+    width: 100%;
     max-width: 100%;
     cursor: grab;
 }
@@ -218,6 +343,7 @@ footer {
     background: #111;
     position: absolute;
     bottom: 0;
+    left: 0;
     width: 100%;
     height: 60px;
 }
@@ -247,14 +373,16 @@ display: flex;
     max-width: 1400px;
     margin: 1em auto;
     .connectCol {
-        width: 22%;
         margin: 1em auto;
-        width: 22%;
+        width: 20%;
     background: rgba(0, 0, 0, 0.11);
     border: solid 2px rgba(0,0,0,0.35);
     border-radius: 5px;
     padding: 1em;
     text-align: center;
+    @media (max-width: 767px){
+        width: 40%;
+    }
     h4 {
         text-align: center;
         margin: 0 auto;
@@ -496,4 +624,60 @@ span.loginFailed {
     
     .notificationMessage {
         padding: .5em;
+    }
+
+    .grid-stream-feed {
+        .slick-streams {
+        flex-wrap: wrap;
+        max-width: 1450px;
+        }
+    .single-stream {
+        margin: 1em auto;
+        width: 95%;
+        max-width: 400px;
+    }
+    }
+    .single-stream {
+        .stream-info-block {
+            display: block;
+            text-align: center;
+            padding: 5px;
+        }
+        .streamer-name {
+        display: inline-block;
+        text-align: center;
+        font-size: 1.2em;
+        color: #cc1011;
+        position: relative;
+        text-decoration: none;
+        }
+        .viewer-count {
+            margin-left: 5px;
+            display: inline-block;
+            text-transform: uppercase;
+            font-size: .85em;
+            &:before {
+                content: " — ";
+            }
+        }
+        @media (max-width: 767px){
+            .streamer-name { display: block; }
+            .viewer-count { display: block;
+            &:before {
+                display: none;
+            }
+            }
+        }
+        .streamer-live-title {
+            display: block;
+            text-align: center;
+            padding: 5px;
+            background: #EEE;
+            margin: 0;
+        }
+    }
+    .subh2 {
+display: block;
+font-size: .6em;
+font-weight: 400;
     }
