@@ -1,6 +1,6 @@
 <?php
 if (php_sapi_name() === 'cli') {
-    echo "Successfully started   from command line! \n";
+    //echo "Successfully started   from command line! \n";
 
 require('vendor/autoload.php');
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -13,8 +13,33 @@ $mypdo = new MyPDO('mysql:host=localhost;dbname=twitchdb;charset=utf8');
 $Stream = new Stream($mypdo);
 $streampriority = $Stream->get_streams_by_priority();
 $twitchAPIclientID = $_ENV['TWITCH_API_CLIENT_ID'];
-foreach ($streampriority as $stream){
+$twitchAPIsecret = $_ENV['TWITCH_API_SECRET'];
 
+$url = "https://id.twitch.tv/oauth2/token";                                                                       
+                                                                                                                                                                               
+                                                                                                           
+ $curl = curl_init();
+ $auth_data = array(
+     'client_id' 		=> $twitchAPIclientID,
+     'client_secret' 	=> $twitchAPIsecret,
+     'grant_type' 		=> 'client_credentials'
+ );
+ curl_setopt($curl, CURLOPT_POST, 1);
+ curl_setopt($curl, CURLOPT_POSTFIELDS, $auth_data);
+ curl_setopt($curl, CURLOPT_URL, $url);
+ curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+ curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+ $result = curl_exec($curl);
+ if(!$result){die("Connection Failure");}
+ curl_close($curl);
+ echo $result;
+ $jresult = json_decode($result);
+ print_r($jresult);
+$token = $jresult->access_token;
+//echo 'Access Token: '.$token;
+
+foreach ($streampriority as $stream){
+$z = 0;
     $header_items = array("Client-ID" => $twitchAPIclientID);                                                                    
     $curl_headers = json_encode($header_items);
     $url = "https://api.twitch.tv/helix/streams?user_login=".$stream['twitch_name'];                                                                       
@@ -22,7 +47,8 @@ foreach ($streampriority as $stream){
     $ch = curl_init();
     curl_setopt_array($ch, array(
         CURLOPT_HTTPHEADER => array(
-           'Client-ID: ' . $twitchAPIclientID
+           'Client-ID: ' . $twitchAPIclientID,
+           'Authorization: Bearer '.$token
         ),
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_URL => $url
@@ -46,19 +72,9 @@ foreach ($streampriority as $stream){
         //echo 'streamer '.$stream['twitch_name']. ' is offline';
         $Stream->updateStreamOnline($stream['id'], 0, 'Offline', 0);
     }
-/*
-    if ($stream['online'] == 1){
-    $streamer = $stream['twitch_name'];
-    echo $streamer . ' online' . PHP_EOL;
-    }
-    else {
-        $streamer = $stream['twitch_name'];
-        echo $streamer . ' offline' . PHP_EOL;
-    }
-    */
     }
 }
     else {
-        echo "Update script must be launched through CLI! \n";
+        //echo "Update script must be launched through CLI! \n";
     }
 ?>

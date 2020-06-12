@@ -30,68 +30,41 @@ foreach ($streampriority as $stream){
 if (basename($_SERVER['PHP_SELF']) == 'index.php') { 
 ?> 
 <script>
-    $(document).ready(function() { 
-    if (($('.slider .slick-slide').length = 2)) {
-
-        // remove arrows
-        //$('.slider__arrow').hide();
+ function initSlider(){
+    if (($('.single-stream').length == 1)) {
+        $('.slick-stream').addClass('only-stream');
+    }
+    if (($('.single-stream').length > 2)) {
+    $('.slick-streams').slick({
+        dots: false,
+        arrows: false,
+        draggable: true,
+        infinite: true,
+        speed: 600,
+        centermode: true,
+        autoplay: true,
+        mobileFirst: true,
         slidesToShow: 1,
-  slidesToScroll: 1,
-        $('.slick-streams').slick({
-            responsive: [
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 2,
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-      }
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 3,
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                }
+            }
+        ]
+    });
+}
     }
-  ]
-        });
-    }
-    if (($('.slider .slick-slide').length > 2)) {
-
-// remove arrows
-$('.slider__arrow').show();
-});
-    }
-$('.slick-streams').slick({
-  dots: false,
-  arrows: true,
-  draggable: true,
-  infinite: true,
-  speed: 600,
-  mobileFirst:true,
-  centermode:true,
-  autoplay: true,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  responsive: [
-    {
-      breakpoint: 1350,
-      settings: {
-        slidesToShow: 3,
-      }
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 2,
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 1,
-      }
-    }
-  ]
-});
+    $(document).ready(function() {
+	initSlider();
 });
 </script>
 <script>
