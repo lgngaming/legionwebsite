@@ -4,16 +4,28 @@ else { echo 'slick-stream-feed'; }
 ?>">
 <?php
 $streampriority = $Stream->get_streams_by_priority();
-$nostreams = 1;
+$onlinestreams = 0;
+$lgnonline = 0;
+$otheronline = 0;
 foreach ($streampriority as $stream){
+    
     if ($stream['online'] == 1){
-        $nostreams = 0;
+        $onlinestreams++;
+        if ($stream['team'] == 'LGN'){
+            $lgnonline = 1;
+        }
+        else {
+            $otheronline++;
+        }
     }
 }
 reset($streampriority);
-if ($nostreams == 0){ ?>
+if ($onlinestreams > 0){ ?>
 <h2>Streams</h2>
-    <div class="streamToggler"><span class="allStreams">All Streams</span><span class="lgnStreams">Legion Streams</span></div>
+<?php if(($lgnonline > 0)&&($otheronline > 0)){
+    echo'<div class="streamToggler"><span class="allStreams">All Streams</span><span class="lgnStreams">Legion Streams</span></div>';
+}
+?>
     <div class="slick-streams">
     <?php
 
@@ -34,10 +46,15 @@ if (basename($_SERVER['PHP_SELF']) == 'index.php') {
     if (($('.single-stream').length == 1)) {
         $('.slick-stream').addClass('only-stream');
     }
+    if (($('.single-stream').length === 3)) {
+        $('.slick-stream').addClass('three-stream');
+    }
     if (($('.single-stream').length > 2)) {
     $('.slick-streams').slick({
         dots: false,
-        arrows: false,
+        arrows: true,
+        prevArrow: '<span class="arrowWrap"><span type="button" class="slick-prev slick-arrow" style="display: block;" aria-label="Previous">&laquo;</span></span>',
+        nextArrow: '<span class="arrowWrap"><span type="button" class="slick-next slick-arrow" style="display: block;" aria-label="Next">&raquo;</span></span>',
         draggable: true,
         infinite: true,
         speed: 600,

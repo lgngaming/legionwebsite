@@ -106,6 +106,7 @@ li {
 display: flex;
 flex-direction: column;
 justify-content: space-around;
+z-index: 3;
     a {
         padding: .5em 1em;
         color: #FFF;
@@ -115,7 +116,7 @@ justify-content: space-around;
         &:after {
             width: 60%;
             height: 1px;
-            background: #888;
+            background: #b5b5b5;
             position: absolute;
             transition: .2s;
             content: '';
@@ -326,6 +327,24 @@ display: flex;
     display: flex;
     margin: 1em auto;
     max-width: 1800px;
+    .arrowWrap {
+        font-size: 5em;
+    display: inline-flex !important;
+    flex-direction: column;
+    justify-content: center;
+    .slick-arrow {
+        transition: .2s;
+        cursor: pointer;
+    &:hover {
+        transform: scale(1.15);
+    }
+}
+    }
+    &.slick-slider {
+        .slick-list {
+            margin: 0 auto;
+        }
+    }
 }
 .single-stream {
     width: 90%;
@@ -347,18 +366,69 @@ footer {
     left: 0;
     width: 100%;
     height: 60px;
+    
+    .social-icons {
+        padding: 10px 5px;
+    display: flex;
+    }
+    @media(max-width: 700px){
+        height: 130px;
+        .footerWrap {
+            flex-direction: column;
+        }
+        .social-icons {
+            margin: 0 auto;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 1.5em;
+    margin-bottom: 12px;
+        }
+    }
+    &.homeFooter {
+        position: relative;
+        height: auto;
+        padding: 2% 0;
+}
+}
+.gunTexture {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: #000000;
+background-image: url("../img/gun-metal.png");
+background-repeat: repeat;
+opacity: 0.35;
+&:after {
+    content: "";
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0) 90%, rgba(0,0,0,1) 100%);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
 }
 .footerWrap {
 display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 80%;
+    width: 95%;
+    max-width: 1400px;
     margin: 0 auto;
     color: #FFF;
+    position: relative;
+    z-index: 3;
+    @media(min-width: 1030px){
+        width: 80%;
+    }
 }
 
 .content-wrap {
-    padding-bottom: 60px;
+
 }
 .connectWrapper {
     padding: 2%;
@@ -375,14 +445,24 @@ display: flex;
     margin: 1em auto;
     .connectCol {
         margin: 1em auto;
-        width: 20%;
+        width: 100%;
     background: rgba(0, 0, 0, 0.11);
     border: solid 2px rgba(0,0,0,0.35);
     border-radius: 5px;
     padding: 1em;
+    max-width: 500px;
     text-align: center;
-    @media (max-width: 767px){
-        width: 40%;
+    &.twit > h4 {
+        margin-bottom: 16px;
+    }
+    iframe {
+        max-width: 100%;
+    }
+    @media (min-width: 768px){
+        width: 45%;
+    }
+    @media (min-width: 1400px){
+        width: 20%;
     }
     h4 {
         text-align: center;
@@ -681,4 +761,94 @@ span.loginFailed {
 display: block;
 font-size: .6em;
 font-weight: 400;
+    }
+
+    .eventWrapper {
+        position: relative;
+        text-align: center;
+        padding: 2em 3% 5em 3%;
+        background-image: url('../img/colbg.jpg');
+        background-size: cover;
+        background-position: center 80%;
+        @media(max-width: 1400px){
+            background-size: auto 160%;
+        }
+h2 {
+    font-size: 2.5em;
+    color: #FFF;
+    z-index: 3;
+    position: relative;
+    text-shadow: #000 3px 2px 0px;
+}
+        iframe {
+            max-width: 100%;
+            max-height: 80vw;
+        }
+    }
+    .eventWrapperShadow {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: rgba(0,0,0,0.45);
+    }
+    .footPadding {
+        padding-bottom: 60px;
+        position: relative;
+        display: block;
+@media(max-width: 700px){
+    padding-bottom: 130px;
+}
+    }
+    .calendarContainer {
+        z-index: 3;
+        position: relative;
+    }
+.announceWrapper {
+    background: #6b0000;
+    padding: 1em;
+}
+.announceImage {
+    img {
+        width: 150px;
+        max-width: 100%;
+    }
+}
+    .announceFlex {
+    display: block;
+    margin: 0 auto;
+    max-width: 570px;
+    width: 90%;
+    display: flex;
+    justify-content: space-evenly;
+    color: #FFF;
+    }
+    .announceBox {
+        display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.5;
+    font-size: 20px;
+    a {
+        background-color: #222;
+    color: #fff;
+    padding: 0em .5em;
+    text-decoration: none;
+    border-radius: 5px;
+    border: solid 1px #FFF;
+    margin: 5px;
+    transition: background-color .3s;
+    &:hover {
+        box-shadow: #000 0px 0px 3px;
+        background-color: #bd0000;
+    }
+    }
+    .announceHeadline {
+        font-size: 1.2em;
+        font-style:italic;
+        margin-bottom: .35em;
+    }
+
     }
