@@ -852,3 +852,58 @@ h2 {
     }
 
     }
+
+.pageStreamBoxBG {
+
+.theatremode {
+    position: relative;
+}
+.pageStreamBox {
+transition: .25s;
+}
+&.theatreon {
+    background: #000;
+    h2 { display: none; }
+    .pageStreamBox {
+        width: 95vw;
+        max-width: 95vw;
+    @media(min-width: 1500px){height: 41vw; }
+    @media(min-width: 1650px){height: 42vw; }
+    @media(min-width: 1920px){height: 43.5vw; }
+    @media(min-width: 2250px){height: 45vw; }
+    @media(min-width: 2550px){height: 45.95vw; }
+    @media(min-width: 4000px){height: 48.8vw; }
+    #twitch-embed {
+        width: 100%;
+        height: 100%;
+    iframe {
+    width: 95vw;
+    max-width: 95vw;
+    height: 100%;
+    max-height: 99vh;
+    }
+    }
+    }
+}
+}
+    .goBig {
+        padding: 0 1em;
+        text-align: center;
+        display: none;
+        .goBigBtn {
+            display: inline-block;
+            margin-left: auto;
+            margin-right: 1em;
+            color: #ffffff;
+            background: rgba(0,0,0,0.75);
+            padding: .5em 1em;
+            font-size: 18px;
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        @media(min-width: 1500px){
+display: block;
+        }
+    }

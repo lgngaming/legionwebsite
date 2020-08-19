@@ -4,7 +4,7 @@
 $mypdo = new MyPDO('mysql:host=localhost;dbname=twitchdb;charset=utf8');
 $Stream = new Stream($mypdo);
 ?>
-<?php include('includes/announcement.php'); ?>
+<?php // include('includes/announcement.php'); ?>
 
 <?php include('includes/featuredstream.php'); ?>
 

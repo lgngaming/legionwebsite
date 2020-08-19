@@ -21,8 +21,8 @@ if ($nostreams == 1){ ?>
 <?php }
 else {
 ?>
-<div class="pageStreamBoxBG">
-<h2>Featured Stream</h2><div class="pageStreamBox"><div id="twitch-embed"></div></div></div>
+<div class="pageStreamBoxBG" id="pageStreamBoxBG">
+<h2>Featured Stream</h2><div class="theatremode"><div class="pageStreamBox"><div id="twitch-embed"></div></div></div><div class="goBig"><span class="goBigBtn">Theater Mode</span></div></div>
 <script src="https://embed.twitch.tv/embed/v1.js"></script>
 <script type="text/javascript">
   var embed = new Twitch.Embed("twitch-embed", {
@@ -38,5 +38,13 @@ else {
     var player = embed.getPlayer();
     player.play();
   });
+</script>
+<script>
+	$('.goBigBtn').click(function() {
+        $(".pageStreamBoxBG").toggleClass("theatreon");
+        $([document.documentElement, document.body]).animate({
+        scrollTop: $("#pageStreamBoxBG").offset().top
+    }, 500);
+});
 </script>
 <?php } ?>

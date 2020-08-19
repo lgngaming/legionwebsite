@@ -32,7 +32,7 @@ if ($onlinestreams > 0){ ?>
 foreach ($streampriority as $stream){
     if ($stream['online'] == 1){
         $streamer = $stream['twitch_name'];   
-    echo '<div class="single-stream '.$stream['team'].'"><div class="stream-info-block"><a href="'.$_ENV['ROOT_URL'].'watch.php?name='.$streamer.'" class="streamer-name">'.$streamer.'</a><span class="viewer-count">Viewers: '.$stream['current_viewer_count'].'</span></div><img src="https://static-cdn.jtvnw.net/previews-ttv/live_user_'.$streamer.'-450x253.jpg"><div class="streamer-live-title"><span class="live-title-name">'.$stream['current_stream_title'].'</span></div></div>';
+    echo '<div class="single-stream '.$stream['team'].'"><div class="stream-info-block"><a href="'.$_ENV['ROOT_URL'].'watch.php?name='.$streamer.'" class="streamer-name">'.$streamer.'</a><span class="viewer-count">Viewers: '.$stream['current_viewer_count'].'</span></div><a href="'.$_ENV['ROOT_URL'].'watch.php?name='.$streamer.'"><img src="https://static-cdn.jtvnw.net/previews-ttv/live_user_'.strtolower($streamer).'-450x253.jpg"></a><div class="streamer-live-title"><span class="live-title-name">'.$stream['current_stream_title'].'</span></div></div>';
     }
 }
 ?>
