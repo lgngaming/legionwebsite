@@ -13,7 +13,7 @@ $dotenv->load(); ?>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<link rel="stylesheet" href="<?php echo getenv('ROOT_URL'); ?>assets/css/style.min.css">
+<link rel="stylesheet" href="<?php echo getenv('ROOT_URL'); ?>assets/css/style.min.css?v=1.3">
 <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Titillium+Web:500,700,900&display=swap" rel="stylesheet">
 
 </head>
