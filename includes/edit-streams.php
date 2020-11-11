@@ -25,6 +25,13 @@ if(isset($_POST['removeStream'])){
       $order = $_POST['row_order'];
       $Stream->update_stream_order($order);
     }
+    if(isset($_POST['notificationEditSubmit'])){
+      //print_r($_POST);
+      $notificationText = $_POST['notificationText'];
+      $notificationCSS = $_POST['notificationCSS'];
+      $notificationIO = $_POST['notificationIO'];
+      $Stream->update_notification($notificationIO, $notificationText, $notificationCSS);
+    }
 echo '<h1>Twitch Streams</h1>';
 echo '<div class="addStream">
 <span class="addStreamButton">Add New Stream</span>

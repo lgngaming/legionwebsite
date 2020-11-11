@@ -907,3 +907,25 @@ transition: .25s;
 display: block;
         }
     }
+
+    .editNotificationSection {
+padding: 1em;
+        h2, h3 {
+            text-align: center;
+        }
+        .notifyIOstatus {
+text-align: center;
+        }
+        .notificationIOTitle {
+            margin-right: 1em;
+        }
+        .toggleEdit {
+            text-align: left;
+            padding-left: 1em;
+            padding-bottom: .5em;
+        }
+        .notificationCSS {
+            width: 100%;
+            min-height: 200px;
+        }
+    }

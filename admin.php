@@ -1,5 +1,7 @@
 
-<?php include('head.php'); ?>
+<?php 
+$pagetype = 'admin';
+include('head.php'); ?>
 
 <?php
 //print_r($_SESSION);
@@ -9,6 +11,7 @@
     }
     else {
 include('includes/edit-streams.php');
+include('includes/admin/edit-notification.php');
     }
       ?>
 <?php include('includes/foot.php'); ?>

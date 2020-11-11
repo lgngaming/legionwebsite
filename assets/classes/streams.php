@@ -10,7 +10,7 @@ class Stream
     }
     /* Create customers table */
     public function create_streams_table() {
-        return $this->conn->run("CREATE TABLE `streams` (
+        return $this->conn->run("CREATE TABLE IF NOT EXISTS `streams` (
             `id` int(11) NOT NULL AUTO_INCREMENT,
             `twitch_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
             `team` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -20,8 +20,20 @@ class Stream
             `priority` INT(255) COLLATE utf8_unicode_ci NOT NULL,
             PRIMARY KEY (`id`),
             UNIQUE KEY `twitch_name` (`twitch_name`)
-          ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;")->fetchAll();
+          ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;");
     }
+
+        /* Create NotificationBar table */
+        public function create_notfcbar_table() {
+            return $this->conn->run("CREATE TABLE IF NOT EXISTS `notificationbar` (
+                `id` int(11) NOT NULL AUTO_INCREMENT,
+                `enabled` varchar(255) NOT NULL,
+                `css` text NOT NULL,
+                `notificationtext` text NOT NULL,
+                PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;");
+        }
+
     /* List all users */
     public function get_streams() {
         return $this->conn->query("SELECT * FROM streams ORDER BY twitch_name ASC")->fetchAll();
@@ -44,6 +56,10 @@ public function get_online_streams() {
         $result = $this->conn->run("SELECT priority FROM streams ORDER BY priority DESC LIMIT 1")->fetch();
         $lastpriority = $result['priority'];
         return $lastpriority;
+    }
+
+    public function get_notificationbar() {
+        return $this->conn->query("SELECT * FROM notificationbar")->fetch();
     }
 
     public function addStream($name, $team){
@@ -144,6 +160,33 @@ public function update_stream_order($order){
     $this->conn->run("UPDATE streams SET priority = ? WHERE id=?",[$priority, $stream]);
     $priority++;
     }
+    //echo "<meta http-equiv=\"refresh\" content=\"0;URL=admin.php\">";
+}
+
+public function update_notification($notificationIO, $notificationText, $notificationCSS){
+    if(!$this->get_notificationbar()) {
+ //notification bar doesn't exist, set up a new one
+ try {
+    $this->conn->run("INSERT INTO notificationbar (enabled, css, notificationtext) VALUES (?,?,?)",[$notificationIO, $notificationCSS, $notificationText]);
+    $caught = false;
+    }
+    catch (PDOException $e){
+    popnotification('error', $e);
+    throw $e;
+    $caught = true;
+    }
+         }
+         else {
+//update existing notification bar
+try {
+    $this->conn->run("UPDATE notificationbar SET enabled = ?, notificationtext = ?, css = ?",[$notificationIO, $notificationText, $notificationCSS]);
+}
+catch (PDOException $e){
+popnotification('error', $e);
+throw $e;
+$caught = true;
+}
+         }
     //echo "<meta http-equiv=\"refresh\" content=\"0;URL=admin.php\">";
 }
 

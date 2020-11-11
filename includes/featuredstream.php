@@ -36,7 +36,8 @@ else {
 
   embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
     var player = embed.getPlayer();
-    player.play();
+    //player.play();
+    
   });
 </script>
 <script>
